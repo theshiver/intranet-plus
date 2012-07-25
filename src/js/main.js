@@ -1,5 +1,6 @@
 ﻿// CREDITS
 // can, uraz, burak g.
+// Chuck Norris
 
 function getAccessInfo(aiurl, target) {
 	target.load(aiurl + ' table table', function(response) {
