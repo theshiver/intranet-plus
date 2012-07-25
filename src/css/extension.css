@@ -1,0 +1,25 @@
+/*
+
+.aicont { width:16px;height:16px;float:right;position:relative }
+.ailink {outline:0;width:16px; height:16px;padding:1px 0;-moz-border-radius:2px;border:1px solid #fff;display:block;position:relative;z-index:0; background:#fff url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkREM0M3REZBRUUzQzExREY5ODM3OUIwNEM2NkVEQjUzIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkREM0M3REZCRUUzQzExREY5ODM3OUIwNEM2NkVEQjUzIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6REQzQzdERjhFRTNDMTFERjk4Mzc5QjA0QzY2RURCNTMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6REQzQzdERjlFRTNDMTFERjk4Mzc5QjA0QzY2RURCNTMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5RMZzfAAAABlBMVEXMzMz////TjRV2AAAANElEQVR42mJgRAMMIAwHEAEGBmQRmACCwiWAroURXQUjYTMICjAywmhcAijuwPAcKgAIMAA9cAB1Z+dh0wAAAABJRU5ErkJggg==) no-repeat 0 1px }
+.bl { width:0;height:0;top:0;left:15px;position:absolute;z-index:10;background:#fff;-moz-border-radius:2px;overflow:auto; }
+.bl table { width:700px;table-layout: fixed; word-wrap:break-word}
+.loading .bl {background:#ddd;}
+.opened .bl { width:720px;padding:10px;height:320px;border:1px solid #ccc; }
+.opened .ailink {z-index:20;border:1px solid #ccc;border-right:0 }
+*/
+
+
+.aicont { width:16px;height:16px;float:right;position:relative }
+.ailink {outline:0;width:16px; height:16px;padding:1px 0;-moz-border-radius:2px;border:1px solid transparent;display:block;position:relative;z-index:0; 
+
+
+}
+.bl { height:0;top:0;left:15px;position:absolute;z-index:10;background:#fff;-moz-border-radius:2px;overflow:auto; border-radius: 5px; }
+.bl table { width:700px;table-layout: fixed; word-wrap:break-word; border-color:#333333;}
+.loading .bl {background:#ddd;}
+.opened .bl { width:720px;padding:10px;height:320px;border:1px solid #FFFFFF; background-color:#474747; }
+.opened .ailink {z-index:20;border:none; }
+.opened > .bl > table > tbody > tr:first-child { background-color:#595959;}
+.opened > .bl > table > tbody > tr > td { color:#CCCCCC;}
+.opened > .bl > table > tbody > tr > td a { color:#FFFFFF;}
