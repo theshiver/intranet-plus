@@ -134,7 +134,7 @@ function splitScreen() {
 	
 
 	$("body").append('<script type="text/javascript">function popup(arg){$("#dhtmltooltip #taskViewer").attr("src", arg)}</script>')
-    
+    $("#dhtmltooltip").before('<div style="padding:5px; color:green;" class="copyLink"></div>');
 }
 
 function loadData(){
@@ -180,7 +180,7 @@ $("#frm_priority").load("overview.asp #frm_priority", function() {
                 })
             });
 
-            $("#dhtmltooltip").before('<div style="padding:5px; color:green;" class="copyLink"></div>');
+            
 
         });
 
