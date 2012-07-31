@@ -63,6 +63,21 @@
 		else {
 			$('.opt-split[value="false"]').attr("checked","checked");
 		}
+
+		if(localStorage["taskActive"] == null || localStorage["taskActive"] == ""){
+			localStorage["taskActive"] = false;
+		}
+		$(".opt-auto-select").text(localStorage["taskActive"]);
+		$(".auto-select").click(function () {
+			localStorage["taskActive"] = $(this).val();
+			$(".opt-auto-select").text(localStorage["taskActive"])
+		});
+		if(localStorage["taskActive"] == "true"){
+			$('.auto-select[value="true"]').attr("checked","checked");
+		}
+		else {
+			$('.auto-select[value="false"]').attr("checked","checked");
+		}
   	</script>
 
 

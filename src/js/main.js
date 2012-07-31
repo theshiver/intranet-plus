@@ -2,13 +2,28 @@
 chrome.extension.sendRequest({method: "getLocalStorage", key: "splitScreen"}, function(response) {
     if(response.data.toString() == "true"){
         splitScreen();
-        console.log("split screen: enabled");
+        console.log("Split screen: enabled");
+        console.log("Page refresh: disabled")
     }
     else if(response.data.toString() == "false"){
-        console.log("split screen: disabled");   
+        console.log("Split screen: disabled"); 
+        console.log("Page refresh: enabled")  
     }
     else {
-        console.log("split screen: error");   
+        console.log("Split screen: error");   
+    }
+});
+
+chrome.extension.sendRequest({method: "getLocalStorage", key: "taskActive"}, function(response) {
+    if(response.data.toString() == "true"){
+        setActive();
+        console.log("Task active: enabled");
+    }
+    else if(response.data.toString() == "false"){
+        console.log("Task active: disabled");  
+    }
+    else {
+        console.log("Task active: error");   
     }
 });
 
@@ -39,11 +54,28 @@ function getAccessInfo(aiurl, target) {
 
 // ACTIVATE FIRST TASK
 function setActive() {
-    if ($("img[src='images/img_active.png']").length === 0) {
-        $("img[src='images/img_inactive.png']").eq(0).parent().click(function () {
-            window.location.href = $("img[src='images/img_inactive.png']").eq(0).parent().attr("href")
-        }).trigger("click");
-    } 
+
+    // LUNCH BREAK CONTROLLER
+    var hours = new Date().getHours()
+    var minutes = new Date().getMinutes()
+    if (hours < 10) {
+        hours = "0" + hours
+    }
+    if (minutes < 10) {
+        minutes = "0" + minutes
+    }
+    var siteTime = hours + "" + minutes
+    if (siteTime >= 1210 && siteTime <= 1300) {
+        //console.log("Active Control Disabled - Time: " + siteTime);
+    }
+    else {
+        if ($("img[src='images/img_active.png']").length === 0) {
+            $("img[src='images/img_inactive.png']").eq(0).parent().click(function () {
+                window.location.href = $("img[src='images/img_inactive.png']").eq(0).parent().attr("href")
+            }).trigger("click");
+        } 
+    }
+
 }
 
 function get_contents() {
@@ -128,11 +160,13 @@ function splitScreen() {
 		"background":"transparent"
 	});
 
+
+
 	$("#dhtmltooltip").append('<iframe allowTransparency="true" id="taskViewer" name="taskViewer" src="" width="100%" height="663" border="0" style="border:none;"></iframe>')
 
     loadData();
 	
-
+    $("body").append('<script type="text/javascript">clearTimeout(refresh);</script>')
 	$("body").append('<script type="text/javascript">function popup(arg){$("#dhtmltooltip #taskViewer").attr("src", arg)}</script>')
     $("#dhtmltooltip").before('<div style="padding:5px; color:green;" class="copyLink"></div>');
 }
@@ -188,27 +222,8 @@ $("#frm_priority").load("overview.asp #frm_priority", function() {
 }
 
 $(document).ready(function () {
-
+    loadData();
     setInterval(function(){
         loadData();
 	}, 30000);
-
-
-	// LUNCH BREAK CONTROLLER
-    var hours = new Date().getHours()
-    var minutes = new Date().getMinutes()
-    if (hours < 10) {
-        hours = "0" + hours
-    }
-    if (minutes < 10) {
-        minutes = "0" + minutes
-    }
-    var siteTime = hours + "" + minutes
-    if (siteTime >= 1210 && siteTime <= 1300) {
-        //console.log("Active Control Disabled - Time: " + siteTime);
-    }
-    else {
-        setActive();
-        //console.log("Active Control Enabled - Time: " + siteTime);
-    }
 });
