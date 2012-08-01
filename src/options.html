@@ -5,6 +5,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=windows-1254" />
 	<title>MagiClick Intranet+</title>
 	<script type="text/javascript" src="js/jquery.js"></script>   
+	<script type="text/javascript" src="js/jquery.tzCheckbox.js"></script>  
 	<link rel="stylesheet" href="css/main.css" type="text/css" /> 
 	<link href='http://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
 	<script type="text/javascript" src="js/main.js"></script> 
@@ -20,6 +21,14 @@
 		.options {background: #27292c;padding:20px 35px; border-bottom:1px solid #000; border-top:1px solid #2c2e32;}
 		
 		header { height:90px; background:#33b6d9;}
+
+		.tzCheckBox { background: url('img/background.png') no-repeat right bottom; display: inline-block; min-width: 60px; height: 33px; white-space: nowrap; position: relative; cursor: pointer; margin-left: 14px !important; padding-bottom: 0px !important}
+		.tzCheckBox.checked { background-position: -7px top; margin: 0 0px 0 0 !important; }
+		.tzCheckBox .tzCBContent { color: white; line-height: 31px; padding-right: 38px; text-align: right; opacity: 0; }
+		.tzCheckBox.checked .tzCBContent { text-align: left; padding: 0 0 0 38px; }
+		.tzCBPart { background: url('img/background.png') no-repeat left bottom; width: 20px; position: absolute; top: 0; left: -23px; height: 33px; overflow: hidden;padding-bottom: 0px !important }
+		.tzCheckBox.checked .tzCBPart { background-position: top right; left: auto; right: -23px;  }
+
 	</style>
 </head>
 <body>
@@ -32,15 +41,22 @@
 		<div class="options">
 			<h2>Split Screen</h2>
 			<h3>Current Status: <b><span class="opt-split-status"></span></b></h3>
-			<label><input class="opt-split" type="radio" name="opt-split" value="true"/>On</label>
-			<label><input class="opt-split" type="radio" name="opt-split" value="false"/>Off</label>
+			<!-- <label><input class="opt-split" type="radio" name="opt-split" value="true"/>On</label>
+			<label><input class="opt-split" type="radio" name="opt-split" value="false"/>Off</label> -->
+			<div class="opt-split">
+				<input type="checkbox" name="ch_effects" data-on="Show effects" data-off="Hide effects" />
+			</div>
 		</div>
 		
 		<div class="options">
-			<h2>Auto Select Task</h2>
+			<h2>Task Fixer</h2>
 			<h3>Current Status: <b><span class="opt-auto-select"></span></b></h3>
-			<label><input class="auto-select" type="radio" name="opt-auto-select" value="true"/>On</label>
-			<label><input class="auto-select" type="radio" name="opt-auto-select" value="false"/>Off</label>
+			<!-- <label><input class="auto-select" type="radio" name="opt-auto-select" value="true"/>On</label>
+			<label><input class="auto-select" type="radio" name="opt-auto-select" value="false"/>Off</label> -->
+
+			<div class="auto-select">
+				<input type="checkbox" name="ch_effects" data-on="Show effects" data-off="Hide effects" />
+			</div>
 		</div>
 		
 	</content>
@@ -54,30 +70,32 @@
 		}
 		$(".opt-split-status").text(localStorage["splitScreen"]);
 		$(".opt-split").click(function () {
-			localStorage["splitScreen"] = $(this).val();
+			localStorage["splitScreen"] = $(".opt-split input").is(":checked").toString()
 			$(".opt-split-status").text(localStorage["splitScreen"])
 		});
-		if(localStorage["splitScreen"] == "true"){
-			$('.opt-split[value="true"]').attr("checked","checked");
-		}
-		else {
-			$('.opt-split[value="false"]').attr("checked","checked");
-		}
+		
+
 
 		if(localStorage["taskActive"] == null || localStorage["taskActive"] == ""){
 			localStorage["taskActive"] = false;
 		}
 		$(".opt-auto-select").text(localStorage["taskActive"]);
 		$(".auto-select").click(function () {
-			localStorage["taskActive"] = $(this).val();
+			localStorage["taskActive"] = $(".auto-select input").is(":checked").toString()
 			$(".opt-auto-select").text(localStorage["taskActive"])
 		});
-		if(localStorage["taskActive"] == "true"){
-			$('.auto-select[value="true"]').attr("checked","checked");
-		}
-		else {
-			$('.auto-select[value="false"]').attr("checked","checked");
-		}
+
+		$(document).ready(function(){
+			$('input[type=checkbox]').tzCheckbox({labels:['Enable','Disable']});
+
+			if(localStorage["splitScreen"] == "true"){
+				$(".opt-split .tzCheckBox").click();
+			}
+
+			if(localStorage["taskActive"] == "true"){
+				$(".auto-select .tzCheckBox").click();
+			}
+		});
   	</script>
 
 
