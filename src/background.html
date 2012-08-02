@@ -11,7 +11,7 @@
 <body>
 
 <script type="text/javascript">
-	
+
 	// FIRST RUN - OPEN OPTIONS
 	function install_notice() {
 	    if (localStorage.getItem('install_time'))
@@ -28,9 +28,15 @@
 		localStorage["splitScreen"] = "false";	
 	}
 
-	if(localStorage["taskActive"] == null || localStorage["taskActive"] == ""){
-		localStorage["taskActive"] = "false";	
+	if(localStorage["AutoLogin"] == null || localStorage["AutoLogin"] == ""){
+		localStorage["AutoLogin"] = "false";	
 	}
+
+	if(localStorage["NinjaMode"] == null || localStorage["NinjaMode"] == ""){
+		localStorage["NinjaMode"] = "false";	
+	}
+
+
 
 	// SEND LOCAL KEY
 	chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {

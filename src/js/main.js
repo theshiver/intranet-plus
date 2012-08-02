@@ -1,60 +1,74 @@
 ﻿//SEND REQUEST TO BACKGROUND
-chrome.extension.sendRequest({method: "getLocalStorage", key: "splitScreen"}, function(response) {
-    if(response.data.toString() == "true"){
+chrome.extension.sendRequest({
+    method: "getLocalStorage",
+    key: "splitScreen"
+}, function (response) {
+    if (response.data.toString() == "true") {
         splitScreen();
-        console.log("Split screen: enabled");
-        console.log("Page refresh: disabled")
+        console.log("Split Screen: Enabled");
+        console.log("Page Refresh: Disabled")
     }
-    else if(response.data.toString() == "false"){
-        console.log("Split screen: disabled"); 
-        console.log("Page refresh: enabled")  
+    else if (response.data.toString() == "false") {
+        console.log("Split Screen: Disabled");
+        console.log("Page Refresh: Enabled")
     }
     else {
-        console.log("Split screen: error");   
+        console.log("Split Screen: Error");
     }
 });
-
-chrome.extension.sendRequest({method: "getLocalStorage", key: "taskActive"}, function(response) {
-    if(response.data.toString() == "true"){
+chrome.extension.sendRequest({
+    method: "getLocalStorage",
+    key: "AutoLogin"
+}, function (response) {
+    if (response.data.toString() == "true") {
+        //setActive();
+        console.log("Auto Login: Enabled");
+    }
+    else if (response.data.toString() == "false") {
+        console.log("Auto Login: Disabled");
+    }
+    else {
+        console.log("Auto Login: Error");
+    }
+});
+chrome.extension.sendRequest({
+    method: "getLocalStorage",
+    key: "NinjaMode"
+}, function (response) {
+    if (response.data.toString() == "true") {
         setActive();
-        console.log("Task active: enabled");
+        console.log("Ninja Mode: Enabled");
     }
-    else if(response.data.toString() == "false"){
-        console.log("Task active: disabled");  
+    else if (response.data.toString() == "false") {
+        console.log("Ninja Mode: Disabled");
     }
     else {
-        console.log("Task active: error");   
+        console.log("Ninja Mode: Error");
     }
 });
-
-jQuery.extend( jQuery.easing,
-{
+jQuery.extend(jQuery.easing, {
     easeIn: function (x, t, b, c, d) {
         return jQuery.easing.easeInQuad(x, t, b, c, d);
     }
 });
-
 jQuery.fn.extend({
     scrollTo: function (speed, easing) {
         return this.each(function () {
-        var targetOffset = $(this).offset().top;
-        $('html,body').animate({
-            scrollTop: targetOffset
-        }, speed, easing);
-    });
+            var targetOffset = $(this).offset().top;
+            $('html,body').animate({
+                scrollTop: targetOffset
+            }, speed, easing);
+        });
     }
 });
-
 // GET ACCESS INFO
 function getAccessInfo(aiurl, target) {
     target.load(aiurl + ' table table', function (response) {
         target.parent().removeClass('loading');
     });
 }
-
 // ACTIVATE FIRST TASK
 function setActive() {
-
     // LUNCH BREAK CONTROLLER
     var hours = new Date().getHours()
     var minutes = new Date().getMinutes()
@@ -73,9 +87,8 @@ function setActive() {
             $("img[src='images/img_inactive.png']").eq(0).parent().click(function () {
                 window.location.href = $("img[src='images/img_inactive.png']").eq(0).parent().attr("href")
             }).trigger("click");
-        } 
+        }
     }
-
 }
 
 function get_contents() {
@@ -153,77 +166,64 @@ function muhtesemScript() {
 }
 
 function splitScreen() {
-	$("div:first table:first tr td:first").width("50%").next().width("50%");
-	$("#dhtmltooltip").css({
-		"visibility": "visible",
-		"width": "48.3%",
-		"background":"transparent"
-	});
-
-
-
-	$("#dhtmltooltip").append('<iframe allowTransparency="true" id="taskViewer" name="taskViewer" src="" width="100%" height="663" border="0" style="border:none;"></iframe>')
-
+    $("div:first table:first tr td:first").width("50%").next().width("50%");
+    $("#dhtmltooltip").css({
+        "visibility": "visible",
+        "width": "48.3%",
+        "background": "transparent"
+    });
+    $("#dhtmltooltip").append('<iframe allowTransparency="true" id="taskViewer" name="taskViewer" src="" width="100%" height="663" border="0" style="border:none;"></iframe>')
     loadData();
-	
     $("body").append('<script type="text/javascript">clearTimeout(refresh);</script>')
-	$("body").append('<script type="text/javascript">function popup(arg){$("#dhtmltooltip #taskViewer").attr("src", arg)}</script>')
+    $("body").append('<script type="text/javascript">function popup(arg){$("#dhtmltooltip #taskViewer").attr("src", arg)}</script>')
     $("#dhtmltooltip").before('<div style="padding:5px; color:green;" class="copyLink"></div>');
 }
 
-function loadData(){
-    
-$("#frm_priority").load("overview.asp #frm_priority", function() {
-            $('td a').each(function() {
-                var plink = $(this).attr('href');
-                if(plink.indexOf('project_page.asp') != -1) {
-                    $(this).addClass('plink');
-                    var plinkparts = plink.split('?')[1].replace('project_id', 'pid').replace('client_id', 'cid').split('&');
-                    $('<div class="aicont"><a class="ailink" href="access_info.asp?'+plinkparts[1] + '&' + plinkparts[0]+'"> > </a><div class="bl"></div></div>').insertBefore($(this));
-                }
-            });
-            $('.ailink').bind('click', function() {
-                getAccessInfo(this.href, $(this).next());
-                if(!$(this).parent().hasClass('opened')) {
-                    $(".opened").removeClass("opened");
-                    $(this).parent().addClass('opened');
-                    $(this).parent().addClass('loading');
-                }
-                else {
-                    $(".opened").removeClass("opened");
-                    $(this).parent().removeClass('opened');
-                    $(this).parent().removeClass('loading');
-                    $(this).next().html('');
-                }
-                return false;
-            });
-            $(document).bind('click', function() {
-                $('.opened > a').click();
-            });
-            $('.aicont').bind('click', function (e) {
-                e.stopPropagation();
-            });
-
-            $("#frm_priority table table a").each(function(){
-                var _self  = $(this);
-                var output = _self.attr("href").slice(18, -11);
-                //_self.attr("href", output);
-                _self.click(function(){
-                    $(".copyLink").text("http://10.0.2.1/" + output);
-                    $(".copyLink").scrollTo();
-                })
-            });
-
-            
-
+function loadData() {
+    $("#frm_priority").load("overview.asp #frm_priority", function () {
+        $('td a').each(function () {
+            var plink = $(this).attr('href');
+            if (plink.indexOf('project_page.asp') != -1) {
+                $(this).addClass('plink');
+                var plinkparts = plink.split('?')[1].replace('project_id', 'pid').replace('client_id', 'cid').split('&');
+                $('<div class="aicont"><a class="ailink" href="access_info.asp?' + plinkparts[1] + '&' + plinkparts[0] + '"> > </a><div class="bl"></div></div>').insertBefore($(this));
+            }
         });
-
-
+        $('.ailink').bind('click', function () {
+            getAccessInfo(this.href, $(this).next());
+            if (!$(this).parent().hasClass('opened')) {
+                $(".opened").removeClass("opened");
+                $(this).parent().addClass('opened');
+                $(this).parent().addClass('loading');
+            }
+            else {
+                $(".opened").removeClass("opened");
+                $(this).parent().removeClass('opened');
+                $(this).parent().removeClass('loading');
+                $(this).next().html('');
+            }
+            return false;
+        });
+        $(document).bind('click', function () {
+            $('.opened > a').click();
+        });
+        $('.aicont').bind('click', function (e) {
+            e.stopPropagation();
+        });
+        $("#frm_priority table table a").each(function () {
+            var _self = $(this);
+            var output = _self.attr("href").slice(18, - 11);
+            //_self.attr("href", output);
+            _self.click(function () {
+                $(".copyLink").text("http://10.0.2.1/" + output);
+                $(".copyLink").scrollTo();
+            })
+        });
+    });
 }
-
 $(document).ready(function () {
     loadData();
-    setInterval(function(){
+    setInterval(function () {
         loadData();
-	}, 30000);
+    }, 30000);
 });
