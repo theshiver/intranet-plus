@@ -62,11 +62,6 @@ jQuery.fn.extend({
     }
 });
 
-
-
-
-
-
 // GET ACCESS INFO
 function getAccessInfo(aiurl, target) {
     target.load(aiurl + ' table table', function (response) {
@@ -198,9 +193,12 @@ function splitScreen() {
     $("#framecontent").before('<a href="javascript:;" style="padding:10px 5px; display:block; color:green;" class="copyLink"></a>');
 }
 
-function loadData() {
-    $("#frm_priority").load("overview.asp #frm_priority", function () {
-        $('td a').each(function () {
+function loadAccessInfo(){
+    if($(".aicont").length > 0){
+
+    }
+    else{
+        $('div:first table:first tr td:first td a').each(function () {
             var plink = $(this).attr('href');
             if (plink.indexOf('project_page.asp') != -1) {
                 $(this).addClass('plink');
@@ -229,23 +227,38 @@ function loadData() {
         $('.aicont').bind('click', function (e) {
             e.stopPropagation();
         });
-        // $("#frm_priority table table a").each(function () {
-        //     var _self = $(this);
-        //     var output = _self.attr("href").slice(18, - 11);
-        //     //_self.attr("href", output);
-        //     _self.click(function () {
-        //         $(".copyLink").text("http://10.0.2.1/" + output);
-        //         $(".copyLink").scrollTo();
-        //     })
-        // });
-        $(".copyLink").click(function (event) {
-            window.open($(this).text(),"","width=1000,height=700,toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizeable=0")
-            event.stopImmediatePropagation();
-        });
+    }
+    $(".copyLink").click(function (event) {
+        window.open($(this).text(),"","width=1000,height=700,toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizeable=0")
+        event.stopImmediatePropagation();
     });
 }
+
+function loadData() {
+    if($("#frm_priority").length > 0){
+        $("#frm_priority").load("overview.asp #frm_priority", function () {
+            loadAccessInfo();
+        });
+    }
+    else if($("#overviewtask-table").length > 0){
+        $("#overviewtask-table").load("overviewtask.asp #overviewtask-table", function () {
+            loadAccessInfo();
+        });
+    }
+    else if($("#overviewtaskstatus-table").length > 0){
+        $("#overviewtaskstatus-table").load("overviewtaskstatus.asp #overviewtaskstatus-table", function () {
+            loadAccessInfo();
+        });
+    }
+    else{
+        loadAccessInfo();
+    }
+    
+}
 $(document).ready(function () {
-    loadData();
+    if($("#frm_priority").length > 0){
+        loadAccessInfo();
+    }
     setInterval(function () {
         loadData();
     }, 30000);

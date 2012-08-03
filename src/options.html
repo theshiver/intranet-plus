@@ -126,7 +126,7 @@
 		}
 		$(".opt-ninja-mode-status").text(localStorage["NinjaMode"]);
 		$(".opt-ninja-mode").click(function () {
-		    localStorage["NinjaMode"] = $(".opt-split input").is(":checked").toString()
+		    localStorage["NinjaMode"] = $(".opt-ninja-mode input").is(":checked").toString()
 		    $(".opt-ninja-mode-status").text(localStorage["NinjaMode"])
 		});
 
