@@ -61,6 +61,12 @@ jQuery.fn.extend({
         });
     }
 });
+
+
+
+
+
+
 // GET ACCESS INFO
 function getAccessInfo(aiurl, target) {
     target.load(aiurl + ' table table', function (response) {
@@ -178,16 +184,18 @@ function muhtesemScript() {
 
 function splitScreen() {
     $("div:first table:first tr td:first").width("50%").next().width("50%");
-    $("#dhtmltooltip").css({
+    $("#framecontent").css({
         "visibility": "visible",
         "width": "48.3%",
         "background": "transparent"
     });
-    $("#dhtmltooltip").append('<iframe allowTransparency="true" id="taskViewer" name="taskViewer" src="" width="100%" height="663" border="0" style="border:none;"></iframe>')
+    $("div:first table:first tr td:first").next().append('<div id="framecontent"></div>');
+    $("#framecontent").append('<iframe allowTransparency="true" id="taskViewer" name="taskViewer" src="" width="100%" height="663" border="0" style="border:none;"></iframe>')
     loadData();
     $("body").append('<script type="text/javascript">clearTimeout(refresh);</script>')
-    $("body").append('<script type="text/javascript">function popup(arg){$("#dhtmltooltip #taskViewer").attr("src", arg)}</script>')
-    $("#dhtmltooltip").before('<a href="javascript:;" style="padding:10px 5px; display:block; color:green;" class="copyLink"></a>');
+    $("body").append('<script type="text/javascript">jQuery.fn.extend({ scrollTo: function (speed, easing) { return this.each(function () { var targetOffset = $(this).offset().top; $("html,body").animate({ scrollTop: targetOffset }, speed, easing); }); } });')
+    $("body").append('<script type="text/javascript">function popup(arg){$("#framecontent #taskViewer").attr("src", arg);$(".copyLink").text("http://10.0.2.1/" + arg);$(".copyLink").scrollTo()}</script>')
+    $("#framecontent").before('<a href="javascript:;" style="padding:10px 5px; display:block; color:green;" class="copyLink"></a>');
 }
 
 function loadData() {
@@ -221,15 +229,15 @@ function loadData() {
         $('.aicont').bind('click', function (e) {
             e.stopPropagation();
         });
-        $("#frm_priority table table a").each(function () {
-            var _self = $(this);
-            var output = _self.attr("href").slice(18, - 11);
-            //_self.attr("href", output);
-            _self.click(function () {
-                $(".copyLink").text("http://10.0.2.1/" + output);
-                $(".copyLink").scrollTo();
-            })
-        });
+        // $("#frm_priority table table a").each(function () {
+        //     var _self = $(this);
+        //     var output = _self.attr("href").slice(18, - 11);
+        //     //_self.attr("href", output);
+        //     _self.click(function () {
+        //         $(".copyLink").text("http://10.0.2.1/" + output);
+        //         $(".copyLink").scrollTo();
+        //     })
+        // });
         $(".copyLink").click(function (event) {
             window.open($(this).text(),"","width=1000,height=700,toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizeable=0")
             event.stopImmediatePropagation();
@@ -242,3 +250,5 @@ $(document).ready(function () {
         loadData();
     }, 30000);
 });
+
+
