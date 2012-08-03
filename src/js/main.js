@@ -31,6 +31,7 @@ chrome.extension.sendRequest({
         console.log("Auto Login: Error");
     }
 });
+
 chrome.extension.sendRequest({
     method: "getLocalStorage",
     key: "NinjaMode"
@@ -46,6 +47,8 @@ chrome.extension.sendRequest({
         console.log("Ninja Mode: Error");
     }
 });
+
+
 jQuery.extend(jQuery.easing, {
     easeIn: function (x, t, b, c, d) {
         return jQuery.easing.easeInQuad(x, t, b, c, d);
@@ -234,11 +237,42 @@ function loadData() {
             window.open($(this).text(),"","width=1000,height=700,toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizeable=0")
             event.stopImmediatePropagation();
         });
+
+        
+        check_ugly_mode();
+        //
     });
 }
 $(document).ready(function () {
     loadData();
+    
     setInterval(function () {
         loadData();
     }, 30000);
 });
+
+
+function check_ugly_mode(){
+    chrome.extension.sendRequest({
+        method: "getLocalStorage",
+        key: "UglyMode"
+    }, function (response) {
+        if (response.data.toString() == "true") {
+            make_ugly()
+        }
+    });
+}
+
+function make_ugly(){
+    $("tr[bgcolor='#FF3300']").remove();
+    $("table[height='90']").height(25);
+    //$("frame[name='content']").css("background-color", "black");
+    $("body").css("background-color", "#222222");
+    $("td").each(function (i) {
+            this.style.color = "white";
+    });
+    $("h1").remove();
+    $("b").each(function (i) {
+            this.style.color = "black";
+    });
+}

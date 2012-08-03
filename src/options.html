@@ -73,6 +73,14 @@
 				<input type="checkbox" name="ch_effects" data-on="Show effects" data-off="Hide effects" />
 			</div>
 		</div>
+
+		<div class="options">
+			<h2>Ugly Mode</h2>
+			<h3>Current Status: <b><span class="opt-ugly-mode-status"></span></b></h3>
+			<div class="opt-ugly-mode">
+				<input type="checkbox" name="ch_effects" data-on="Show effects" data-off="Hide effects" />
+			</div>
+		</div>
 		
 	</content>
 	
@@ -130,6 +138,16 @@
 		    $(".opt-ninja-mode-status").text(localStorage["NinjaMode"])
 		});
 
+		//Ugly Mode
+		if (localStorage["UglyMode"] == null || localStorage["UglyMode"] == "") {
+		    localStorage["UglyMode"] = false;
+		}
+		$(".opt-ugly-mode-status").text(localStorage["UglyMode"]);
+		$(".opt-ugly-mode").click(function () {
+		    localStorage["UglyMode"] = $(".opt-ugly-mode input").is(":checked").toString()
+		    $(".opt-ugly-mode-status").text(localStorage["UglyMode"])
+		});
+
 		$(document).ready(function () {
 		    $('input[type=checkbox]').tzCheckbox({
 		        labels: ['Enable', 'Disable']
@@ -143,6 +161,9 @@
 		    }
 		    if (localStorage["NinjaMode"] == "true") {
 		        $(".opt-ninja-mode .tzCheckBox").click();
+		    }
+		    if (localStorage["UglyMode"] == "true") {
+		        $(".opt-ugly-mode .tzCheckBox").click();
 		    }
 		});
   	</script>
