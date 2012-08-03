@@ -7,4 +7,5 @@ ul li * {display:block;clear:both;}
 #taskStatus {background:url(../done.png) no-repeat 5px center #a0e237;display:none; line-height:16px; padding:5px 5px 5px 23px; color:#000; font-weight:bold;}
 #error {background:url(../error.png) no-repeat 5px center #c0442a;display:none; line-height:16px; padding:5px 5px 5px 23px; color:#fff;}
 #error a {color:#fff; text-decoration:none;}
-
+.copyLink {cursor: pointer;}
+.copyLink:hover {text-decoration: underline;}

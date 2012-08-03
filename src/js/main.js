@@ -91,6 +91,17 @@ function setActive() {
     }
 }
 
+function TaskPop(url, gen, yuk) {
+    var i = Math.random() * 1000000000000000000;
+    i = "quoted" + i;
+    try {
+        EWin = eval(window.open("", i, "toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizeable=0,width=" + gen + ",height=" + yuk));
+        EWin.location.href = url;
+        EWin.focus();
+    }
+    catch (e) {}  
+}
+
 function get_contents() {
     var url = 'http://10.0.2.1/rss.asp';
     var rssCount;
@@ -176,7 +187,7 @@ function splitScreen() {
     loadData();
     $("body").append('<script type="text/javascript">clearTimeout(refresh);</script>')
     $("body").append('<script type="text/javascript">function popup(arg){$("#dhtmltooltip #taskViewer").attr("src", arg)}</script>')
-    $("#dhtmltooltip").before('<div style="padding:5px; color:green;" class="copyLink"></div>');
+    $("#dhtmltooltip").before('<a href="javascript:;" style="padding:10px 5px; display:block; color:green;" class="copyLink"></a>');
 }
 
 function loadData() {
@@ -218,6 +229,10 @@ function loadData() {
                 $(".copyLink").text("http://10.0.2.1/" + output);
                 $(".copyLink").scrollTo();
             })
+        });
+        $(".copyLink").click(function (event) {
+            window.open($(this).text(),"","width=1000,height=700,toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizeable=0")
+            event.stopImmediatePropagation();
         });
     });
 }

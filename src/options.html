@@ -39,7 +39,7 @@
 </head>
 <body>
 	<header>
-		<h1>Intranet+ <span>Faster, better, prettier!</span></h1>
+		<h1>Intranet+ <span>Version: 2.0308</span></h1>
 	</header>
 	
 	<content>
@@ -140,6 +140,9 @@
 		    if (localStorage["AutoLogin"] == "true") {
 		        $(".auto-select .tzCheckBox").click();
 		        $("#userpass").slideDown();
+		    }
+		    if (localStorage["NinjaMode"] == "true") {
+		        $(".opt-ninja-mode .tzCheckBox").click();
 		    }
 		});
   	</script>
