@@ -1,34 +1,18 @@
 ﻿{
-	"background_page": "background.html",
-	"options_page":"options.html",
-	"name": "Intranet+ v2.0",
-	"manifest_version": 1,
-	"version": "2.0",
-	//"description": "",
+	"name": "Intranet+ v3.0",
+	"manifest_version": 2,
+	"description": "Muhteşem Intranet Eklentisi",
+	"version": "3.0",
 	"browser_action": {
-		"default_icon": "icon_inactive.png",
-		"popup": "popup.html"
+		"default_icon": "icon.png"
 	},
 	"permissions": [
-		"http://10.0.2.1/*",
-		"notifications",
-		"unlimitedStorage",
-		"background",
-		"clipboardRead",
-		"clipboardWrite"
+		"https://intranet.magiclick.com/overview.asp*"
 	],
 	"content_scripts": [
 		{
-		"matches": ["http://10.0.2.1/overview*"],
-		"js": ["js/jquery.js", "js/main.js"],
-		"css": ["css/extension.css"],
-		"all_frames": true
-		},
-		{
-		"matches": ["http://10.0.2.1/index1.asp"],
-		"js": ["js/jquery.js", "js/main-login.js"],
-		"css": ["css/extension.css"],
-		"all_frames": true
+		"matches": ["https://intranet.magiclick.com/overview.asp*"],
+		"js": ["jquery.js", "main.js"]
 		}
 	]
 }
